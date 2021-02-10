@@ -206,6 +206,7 @@ class Simple
             assert(isset($params['ReturnStateParam'], $params['ReturnStateStage']));
         }
 
+        $as = Source::getById($this->authSource);
         if ($this->session->isValid($this->authSource)) {
             $state = $this->session->getAuthData($this->authSource, 'LogoutState');
             if ($state !== null) {
@@ -216,9 +217,14 @@ class Simple
 
             $params['LogoutCompletedHandler'] = [get_class(), 'logoutCompleted'];
 
-            $as = Source::getById($this->authSource);
             if ($as !== null) {
                 $as->logout($params);
+            }
+        }
+        else {
+            // Call the "no session" logout method, if possible.
+            if ($as !== null) {
+                $as->executeLogoutTasksWhenUnauthenticated();
             }
         }
 

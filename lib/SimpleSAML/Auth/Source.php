@@ -269,6 +269,20 @@ abstract class Source
         // default logout handler which doesn't do anything
     }
 
+    /**
+     * Executes special steps to complete logout operation when unauthenticated.
+     *
+     * This method is called during a logout operation if the user is not logged in
+     * with simpleSAMLphp.
+     *
+     * This method must return or throw an exception.
+     *
+     * @return void
+     */
+    public function executeLogoutTasksWhenUnauthenticated()
+    {
+        // Default implementation does nothing.
+    }
 
     /**
      * Complete logout.
